@@ -19,7 +19,7 @@ function InitialScreen() {
                 <NavMenu>
                     <span>Quem somos</span>
                     <span>Nossos Cursos</span>
-                    <span><Link to="/auth">Entrar</Link></span>
+                    <span><Link to="/login">Entrar</Link></span>
                     <span>Botão cadastrar</span>
                     
                 </NavMenu>
