@@ -1,10 +1,17 @@
 import React from 'react'
 import styled from "styled-components";
-
+import { useHistory } from 'react-router-dom';
 // import UIButton from 'components/UI/Button/Button';
 
 
 const Auth = () => {
+
+    const history = useHistory();
+
+    const handleClick = () => { //Fazer tratativa para filtrar se é prof ou aluno.
+        history.push("professor")
+    }
+
     return (
         <Container>
             <UserLogin >
@@ -22,7 +29,8 @@ const Auth = () => {
                         theme="contained-green"
                         rounded
                      >
-                     Entrar ou cadastrar
+                         <button onClick={handleClick}>Entrar</button>
+                     
                     </UIButton>
                 </form>
                 </div>
