@@ -21,6 +21,7 @@ function InitialScreen() {
                     <span>Nossos Cursos</span>
                     <span><Link to="/auth">Entrar</Link></span>
                     <span>Botão cadastrar</span>
+                    
                 </NavMenu>
             </Main>
         </Header>
