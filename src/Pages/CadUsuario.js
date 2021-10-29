@@ -37,9 +37,17 @@ function CadastroUsuario() {
                             autoComplete="off" 
                             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                             required />
-                            <small>Formato para adicionar telefone: DDD - 99999-9999</small>
+                            <small>Formato para adicionar telefone: (DDD) 99999-9999</small>
+                            
+                            <div>
+                                <input id="date" type="date" name="date"/>
+                                <input id="cpf" type="text"/>
+                            </div>
+                            <small>Formato para adicionar CPF: 999.999.999-99</small>
                          
+                            
                     </Form>
+                    {/* Idade, CPF, DEPOIS DOIS BOTÃO, QUERO SER PROF E QUERO SER ALUNO E BOTÃO CADASTRAR*/}
                     <UIButton type="submit" theme="contained-green" rounded>
                         
                          {/* <button onClick={handleClick}>Entrar</button> */}
@@ -107,9 +115,26 @@ const Form = styled.div`
     height: 1.4rem;
     
     background-color: #BBBBBB;
-    width: 18rem;
+    width: 19.2rem;
   }
 
+  input#date {
+      width: 8rem;
+      margin: 1.4rem 1.5rem 0 0;
+      height: 1.4rem;
+
+      /* display: flex; */
+      /* flex: 1;
+      justify-content: center;
+      align-items: center; */
+  }
+
+  input#cpf {
+    /* display: flex; */
+    height: 1.4rem;
+    width: 9rem;
+    margin: 1.4rem 1.5rem 0 0;
+  }
   
 
   small {
