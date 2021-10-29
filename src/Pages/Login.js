@@ -70,9 +70,10 @@ const UserLogin = styled.div`
   }
 
   div {
-      background-color: #FFFFFF;
-     justify-content: center;
-        display: flex;
+    background-color: #FFFFFF;
+    justify-content: center;
+    display: flex;
+    border-radius: 0.4rem;
   }
 `
 const Form = styled.div`
@@ -80,7 +81,7 @@ const Form = styled.div`
   flex-direction: column;
  
   label {
-    margin-bottom: 5px;
+    margin-bottom: 1px;
     color: #051932;
     font-size: 16px;
     margin-top: 2rem;

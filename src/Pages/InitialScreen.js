@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
@@ -19,8 +20,9 @@ function InitialScreen() {
                 <NavMenu>
                     <span>Quem somos</span>
                     <span>Nossos Cursos</span>
-                    <span><Link to="/login">Entrar</Link></span>
-                    <span>Botão cadastrar</span>
+                    <span ><Link to="/login">Entrar</Link></span>
+                    <span ><Link to="/CadUsuario">Cadastrar</Link></span>
+                    
                     
                 </NavMenu>
             </Main>
@@ -37,8 +39,7 @@ const Header = styled.div`
     width: 100%;
     height: 100rem;
     /* background: #3FDCBB; */
-    padding: 0;
-    margin: 0;
+
 `
 const Main = styled.div`
     display: flex;
@@ -55,9 +56,10 @@ const Search = styled.div`
 `
 
 const NavMenu = styled.div`
-
+    
 span {
-    padding: 0.8rem;
+    padding: 0.8rem; 
+    
 }
 
 `

@@ -13,7 +13,9 @@ code {
 } */
 
 
-
+*{
+  font-family: 'Poppins', sans-serif;  
+}
 
 body {
    padding: 0;
@@ -22,5 +24,6 @@ body {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    
   }
 
