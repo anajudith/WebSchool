@@ -79,7 +79,7 @@ const Container = styled.div `
     justify-content: center;
     align-items: center;
     background-color: #051932;
-    height: 100vh;
+    //fazer um media querie com o height: 100vh
 
 `
 const UIButton = styled.div`
@@ -139,21 +139,12 @@ const Form = styled.div`
       
       width: 8rem;
       height: 1.4rem;
-      /* display: flex; */
-      /* flex: 1;
-      justify-content: center;
-      align-items: center; */
-      
   }
 
   input#cpf {
-    /* display: flex; */
-    
     height: 1.4rem;
     width: 9rem;
-    
   }
-  
 
   small {
     opacity: 0.4;
