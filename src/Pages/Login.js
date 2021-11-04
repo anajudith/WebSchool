@@ -81,17 +81,16 @@ const Form = styled.div`
   flex-direction: column;
  
   label {
-    margin-bottom: 1px;
     color: #051932;
     font-size: 16px;
     margin-top: 2rem;
     float: right;
   }
+
   input {
     border-radius: 4px;
     border: 1px solid #BBBBBB;
     height: 1.4rem;
-    
     background-color: #BBBBBB;
     width: 18rem;
   }
