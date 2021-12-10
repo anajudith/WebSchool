@@ -1,98 +1,65 @@
-import React, { useState } from 'react'
+import React from "react";
 import styled from "styled-components";
-import { useHistory } from 'react-router-dom';
-// import UIButton from 'components/UI/Button/Button';
-
+import "./app.css";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as yup from "yup";
+import Axios from "axios";
 
 const Auth = () => {
+  const handleLogin = (values) => {
+    Axios.post("http://localhost:3001/login", {
+      email: values.email,
+      password: values.password,
+    }).then((response) => {
+      alert(response.data.msg);
+      window.open("/professor");
+    });
+  };
 
-    const history = useHistory();
+  const validationsLogin = yup.object().shape({
+    email: yup
+      .string()
+      .email("email inválido")
+      .required("O email é obrigatório"),
+    password: yup
+      .string()
+      .min(8, "A senha deve ter pelo menos 8 caracteres")
+      .required("A senha é obrigatória"),
+  });
+  return (
+    <div className="container">
+      <h1>Login</h1>
+      <Formik
+        initialValues={{}}
+        onSubmit={handleLogin}
+        validationSchema={validationsLogin}
+      >
+        <Form className="login-form">
+          <div className="login-form-group">
+            <Field name="email" className="form-field" placeholder="Email" />
 
-    const handleClick = () => { //Fazer tratativa para filtrar se é prof ou aluno.
-        history.push("professor")
-    }
+            <ErrorMessage
+              component="span"
+              name="email"
+              className="form-error"
+            />
+          </div>
+          <div className="form-group">
+            <Field name="password" className="form-field" placeholder="Senha" />
 
-    return (
-        <Container>
-            <UserLogin >
-                <h1>Login</h1>
-                <div>
-                <form autoComplete="nope">
-                    <Form >
-                        <label htmlFor="email">Email</label>
-                        <input id="email" type="text" name="email" autoComplete="off" />
-                        <label htmlFor="password">Senha</label>
-                        <input id="password" type="password" name="password" />
-                    </Form>
-                    <UIButton
-                        type="submit"
-                        theme="contained-green"
-                        rounded
-                     >
-                         <button onClick={handleClick}>Entrar</button>
-                     
-                    </UIButton>
-                </form>
-                </div>
-          </UserLogin>
-            
-        </Container>
-    )
-}
-export default Auth
+            <ErrorMessage
+              component="span"
+              name="password"
+              className="form-error"
+            />
+          </div>
 
-
-const Container = styled.div `
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #051932;
-    height: 100vh;
-
-`
-const UIButton = styled.div`
-   width: 100%;
-  margin-top: 30px;
-  margin-bottom: 30px; 
-//Pegar estilização do botão no UI Material
-`
-
-const UserLogin = styled.div`
-  width: 400px;
-  margin: 0 auto;
-
-  h1 {
-    font-size: 40px;
-    color: #FFFFFF;
-    margin-bottom: 50px;
-    text-align: center;
-  }
-
-  div {
-    background-color: #FFFFFF;
-    justify-content: center;
-    display: flex;
-    border-radius: 0.4rem;
-  }
-`
-const Form = styled.div`
-  display: flex;
-  flex-direction: column;
- 
-  label {
-    color: #051932;
-    font-size: 16px;
-    margin-top: 2rem;
-    float: right;
-  }
-
-  input {
-    border-radius: 4px;
-    border: 1px solid #BBBBBB;
-    height: 1.4rem;
-    background-color: #BBBBBB;
-    width: 18rem;
-  }
-`
-//user-login__submit-button
+          <button className="button" type="submit">
+            Login
+          </button>
+        </Form>
+      </Formik>
+    </div>
+  );
+};
+export default Auth;

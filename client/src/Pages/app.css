@@ -1,0 +1,54 @@
+body {
+    background-color: #051932 !important;
+}
+
+.container {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    height: max-content;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px 15px;
+    margin-top: 150px;
+    border-radius: 7px;
+    font-family: Roboto, sans-serif;
+}
+
+h1 {
+    margin: 0;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.login-form {
+    padding: 5px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-field {
+    display: inline-block;
+    padding: 5px;
+    margin-top: 20px;
+    transition: all 0.2s ease-in-out;
+    width: 300px;
+}
+
+.form-error {
+    display: block;
+    color: red;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

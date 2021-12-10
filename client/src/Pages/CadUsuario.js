@@ -1,154 +1,230 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
-
+import "./app.css";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as yup from "yup";
+import Axios from "axios";
 
 function CadastroUsuario() {
-    return (
-        <Container>
-            <UserLogin >
-                <h1>Cadastro</h1>
-                <div>
-                <form autoComplete="nope">
-                    <Form >
-                        <label htmlFor="email">Nome Completo</label>
-                        <input id="email"
-                            type="text"
-                            name="email"
-                            autoComplete="off" required
-                         />
+  const handleRegister = (values) => {
+    Axios.post("http://localhost:3001/register", {
+      nomeCompleto: values.nomeCompleto,
+      email: values.email,
+      password: values.password,
+      telefone: values.telefone,
+      cpf: values.cpf,
+      dataNascimento: values.dataNascimento,
+      tipoUsuario: values.tipoUsuario,
+    }).then((response) => {
+      alert(response.data.msg);
+      window.open("/login");
+    });
+  };
 
-                        <label htmlFor="email">Email</label>
-                        <input id="email" 
-                            type="text" 
-                            name="email" 
-                            autoComplete="off" required
-                        />
+  const validationsRegister = yup.object().shape({
+    nomeCompleto: yup.string().required("Nome completo é obrigatório"),
+    email: yup
+      .string()
+      .email("email inválido")
+      .required("O email é obrigatório"),
+    password: yup
+      .string()
+      .min(8, "A senha deve ter pelo menos 8 caracteres")
+      .required("A senha é obrigatória"),
+    confirmation: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "As senhas são diferentes")
+      .required("A confirmação da senha é obrigatória"),
+    telefone: yup.string().required("Telefone é obrigatório"),
+    cpf: yup.string().required("CPF é obrigatório"),
+    dataNascimento: yup.string().required("Data de Nascimento é obrigatório"),
+    tipoUsuario: yup.string().required("Tipo Usuário é obrigatório"),
+  });
 
-                        <label htmlFor="password">Senha</label>
-                        <input id="password"
-                            type="password"
-                            name="password" required
-                        />
+  return (
+    <div className="container">
+      <h1>Cadastro</h1>
+      <Formik
+        initialValues={{}}
+        onSubmit={handleRegister}
+        validationSchema={validationsRegister}
+      >
+        <Form className="register-form">
+          <div className="register-form-group">
+            <Field
+              name="nomeCompleto"
+              className="form-field"
+              placeholder="Nome Completo"
+            />
 
-                        <label for="phone">Telefone</label>
-                        <input id="phone" 
-                            type="tel" 
-                            name="phone" 
-                            autoComplete="off" 
-                            // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                            required 
-                        />
-                            <small>Formato para adicionar telefone: (DDD) 99999-9999</small>
-                          
-                        <label for="date">CPF</label>
-                        <input id="email" type="text"/>
-                        <small>Formato para adicionar CPF: 999.999.999-99</small>
+            <ErrorMessage
+              component="span"
+              name="nomeCompleto"
+              className="form-error"
+            />
+          </div>
+          <div className="register-form-group">
+            <Field name="email" className="form-field" placeholder="Email" />
 
-                        <label for="date">Data nascimento</label>
-                        <input id="date" type="date" name="date"/>
-                          
-                        
-                            
-                        
-                           
-                        <div id="button">
-                          <button>Quero ser Profesor</button>
-                          <button>Quero ser Aluno</button>
-                        </div>
-                    </Form>
-                    {/* Idade, CPF, DEPOIS DOIS BOTÃO, QUERO SER PROF E QUERO SER ALUNO E BOTÃO CADASTRAR*/}
-                    <UIButton type="submit" theme="contained-green" rounded>
-                        
-                         {/* <button onClick={handleClick}>Entrar</button> */}
-                     
-                    </UIButton>
-                </form>
-                </div>
-          </UserLogin>
-            
-        </Container>
-    )
+            <ErrorMessage
+              component="span"
+              name="email"
+              className="form-error"
+            />
+          </div>
+
+          <div className="form-group">
+            <Field name="password" className="form-field" placeholder="Senha" />
+
+            <ErrorMessage
+              component="span"
+              name="password"
+              className="form-error"
+            />
+          </div>
+
+          <div className="form-group">
+            <Field
+              name="confirmation"
+              className="form-field"
+              placeholder="Confirmação da senha"
+            />
+
+            <ErrorMessage
+              component="span"
+              name="confirmation"
+              className="form-error"
+            />
+          </div>
+
+          <div className="form-group">
+            <Field
+              name="telefone"
+              className="form-field"
+              placeholder="Telefone"
+            />
+
+            <ErrorMessage
+              component="span"
+              name="telefone"
+              className="form-error"
+            />
+          </div>
+
+          <div className="form-group">
+            <Field name="cpf" className="form-field" placeholder="CPF" />
+
+            <ErrorMessage component="span" name="cpf" className="form-error" />
+          </div>
+
+          <div className="form-group">
+            <Field name="dataNascimento" className="form-field" type="date" />
+
+            <ErrorMessage
+              component="span"
+              name="dataNascimento"
+              className="form-error"
+            />
+          </div>
+
+          <div role="group" aria-labelledby="my-radio-group">
+            <label>
+              <Field type="radio" name="tipoUsuario" value="P" />
+              Quero ser Professor
+            </label>
+            <label>
+              <Field type="radio" name="tipoUsuario" value="A" />
+              Quero ser Aluno
+            </label>
+          </div>
+
+          <button className="button" type="submit">
+            Cadastrar
+          </button>
+        </Form>
+      </Formik>
+    </div>
+  );
 }
 
-export default CadastroUsuario
+export default CadastroUsuario;
 
+// <div className="container">
+//   <h1>Login</h1>
+//   <Formik
+//     initialValues={{}}
+//     onSubmit={handleLogin}
+//     validationSchema={validationsLogin}
+//   >
+//     <Form className="login-form">
+//       <div className="login-form-group">
+//         <Field name="email" className="form-field" placeholder="Email" />
 
-const Container = styled.div `
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #051932;
-    height: 100vh;
-    //fazer um media querie com o height: 100vh
+//         <ErrorMessage
+//           component="span"
+//           name="email"
+//           className="form-error"
+//         />
+//       </div>
+//       <div className="form-group">
+//         <Field name="password" className="form-field" placeholder="Senha" />
 
-`
-const UIButton = styled.div`
-  width: 100%;
-  margin-top: 30px;
-  margin-bottom: 30px; 
-//Pegar estilização do botão no UI Material
-`
+//         <ErrorMessage
+//           component="span"
+//           name="password"
+//           className="form-error"
+//         />
+//       </div>
 
-const UserLogin = styled.div`
-  width: 400px;
-  margin: 0 auto;
+//       <button className="button" type="submit">
+//         Login
+//       </button>
+//     </Form>
+//   </Formik>
+//   <h1>Cadastro</h1>
+//   <Formik
+//     initialValues={{}}
+//     onSubmit={handleRegister}
+//     validationSchema={validationsRegister}
+//   >
+//     <Form className="register-form">
+//       <div className="register-form-group">
+//         <Field name="email" className="form-field" placeholder="Email" />
 
-  h1 {
-    font-size: 40px;
-    color: #FFFFFF;
-    margin-bottom: 50px;
-    text-align: center;
-  }
+//         <ErrorMessage
+//           component="span"
+//           name="email"
+//           className="form-error"
+//         />
+//       </div>
 
-  div {
-    background-color: #FFFFFF;
-    justify-content: center;
-    display: flex;
-    border-radius: 0.4rem;
-  }
-`
-const Form = styled.div`
-  /* display: flex; */
-  flex-direction: column;
- 
-  label {
-    
-    margin-bottom: 1px;
-    color: #051932;
-    font-size: 16px;
-    margin-top: 1.4rem;
-    /* float: right; */
-  }
-  input {
-    border-radius: 4px;
-    border: 1px solid #BBBBBB;
-    height: 1.4rem;
-    
-    background-color: #BBBBBB;
-    width: 19.2rem;
-  }
-  div#button {
-    margin: 2rem 0rem 0rem 2rem; 
-    justify-content: space-between;
-    width: 17rem;
-    height: 2rem;
+//       <div className="form-group">
+//         <Field name="password" className="form-field" placeholder="Senha" />
 
-  }
+//         <ErrorMessage
+//           component="span"
+//           name="password"
+//           className="form-error"
+//         />
+//       </div>
 
-  input#date {
-      
-      width: 8rem;
-      height: 1.4rem;
-  }
+//       <div className="form-group">
+//         <Field
+//           name="confirmation"
+//           className="form-field"
+//           placeholder="Senha"
+//         />
 
-  input#cpf {
-    height: 1.4rem;
-    width: 9rem;
-  }
+//         <ErrorMessage
+//           component="span"
+//           name="confirmation"
+//           className="form-error"
+//         />
+//       </div>
 
-  small {
-    opacity: 0.4;
-  }
-`
-//user-login__submit-button
+//       <button className="button" type="submit">
+//         Cadastrar
+//       </button>
+//     </Form>
+//   </Formik>
+// </div>

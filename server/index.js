@@ -1,37 +1,87 @@
-//  const Sequelize = require('sequelize')
-//  const sequelize = new Sequelize('webschool', 'root', '123', {
-//     //qual maquina/servidor esta o banco
-//      host: "localhost",
-//      dialect: 'mysql'
-//  }) //conectando ao banco de dados 
-
-//  sequelize.authenticate().then( function () {
-//      console.log("Conectado com sucesso!!!!!!!")
-//  }).catch(function(erro) {
-//      console.log("Falha ao se conectar: "+erro)
-//  });
-
-
 const express = require("express");
 const app = express();
- const mysql = require('mysql');
+const mysql = require("mysql");
+const cors = require("cors");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
- const db = mysql.createPool({
-    host: "localhost",
-    user : "root",
-    password : "1234",
-    database: "webschool",
- });
+const db = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "1234",
+  database: "webschool",
+});
 
-app.get("/", (req, res) => {
-    db.query("INSERT INTO usuarios (nome, email, senha, Telefone, Data_de_ascimento, CPF, TipoUsuario) VALUES ('Fulano2', 'fulano@gmail.com', '123456', '99999999', '11/11/2011', '12345678911', 'P')", (err, result) => {
-        if(err) {
-             debugger
-             console.log(err)
-         }
-     })
-})
+app.use(express.json());
+app.use(cors());
+
+app.post("/register", (req, res) => {
+  const nomeCompleto = req.body.nomeCompleto;
+  const email = req.body.email;
+  const password = req.body.password;
+  const telefone = req.body.telefone;
+  const cpf = req.body.cpf;
+  const dataNascimento = req.body.dataNascimento;
+  const tipoUsuario = req.body.tipoUsuario;
+
+  db.query("SELECT * FROM usuarios WHERE email = ?", [email], (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+
+    if (result.length == 0) {
+      bcrypt.hash(password, saltRounds, (erro, hash) => {
+        db.query(
+          "INSERT INTO usuarios (nome, email, senha, Telefone, Data_de_nascimento, CPF, TipoUsuario) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          [
+            nomeCompleto,
+            email,
+            hash,
+            telefone,
+            dataNascimento,
+            cpf,
+            tipoUsuario,
+          ],
+          (err, response) => {
+            if (err) {
+              res.send(err);
+            }
+
+            res.send({ msg: "Cadastrado com sucesso" });
+          }
+        );
+      });
+    } else {
+      res.send({ msg: "Usuário já cadastrado" });
+    }
+  });
+});
+
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const senha = req.body.password;
+
+  db.query("SELECT * FROM usuarios WHERE email = ?", [email], (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    if (result.length > 0) {
+      bcrypt.compare(senha, result[0].senha, (error, response) => {
+        if (error) {
+          res.send(error);
+        }
+        if (response) {
+          res.send({ msg: "Usuário logado" });
+        } else {
+          res.send({ msg: "Senha incorreta" });
+        }
+      });
+    } else {
+      res.send({ msg: "Conta não encontrada" });
+    }
+  });
+});
 
 app.listen(3001, () => {
-    console.log("Rodando na porta 3001")
+  console.log("Rodando na porta 3001");
 });
