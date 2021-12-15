@@ -6,17 +6,18 @@ import Axios from "axios";
 import "./CadCurso.css";
 import { useParams } from 'react-router';
 
-function CadModulo() {
+function CadCurso() {
     const { id } = useParams();
 
-  const cadastrarModulo = (values) => {
-    Axios.post("http://localhost:3001/cadastrarModulo", {
-        tituloModulo: values.tituloModulo,
+  const cadastrarCurso = (values) => {
+    Axios.post("http://localhost:3001/cadastrarAula", {
+        nomeAula: values.nomeAula,
+        descricaoAula: values.descricaoAula,
         tempoDuracao: values.tempoDuracao,
-        idCurso: id
+        urlAula: values.urlAula,
+        idModulo: id
     }).then((response) => {
       alert(response.data.msg);
-      window.open(`/modulo/aula/${response.data.idModulo}`)
       }).catch((err) => {
         console.log(err);
       });
@@ -29,25 +30,39 @@ function CadModulo() {
 
   return (
     <div className="container">
-      <h1>Cadastrar Modulo</h1>
+      <h1>Cadastrar Aula</h1>
       <Formik
         initialValues={{}}
-        onSubmit={cadastrarModulo}
+        onSubmit={cadastrarCurso}
 
         // validationSchema={validationsRegister}
       >
         <Form className="register-form">
           <div className="register-form-group">
-            <label>Nome do modulo</label>
+            <label>Titulo aula</label>
             <Field
-              name="tituloModulo"
+              name="nomeAula"
               className="form-field"
-              placeholder="Nome do modulo"
+              placeholder="Dê um titulo para a aula"
             />
 
             <ErrorMessage
               component="span"
-              name="tituloModulo"
+              name="nomeAula"
+              className="form-error"
+            />
+          </div>
+          <div className="register-form-group">
+            <label>Descrição da aula</label>
+            <Field
+              name="descricaoAula"
+              className="form-field"
+              placeholder="Descreva a aula"
+            />
+
+            <ErrorMessage
+              component="span"
+              name="descricaoAula"
               className="form-error"
             />
           </div>
@@ -65,6 +80,20 @@ function CadModulo() {
               className="form-error"
             />
           </div>
+          <div className="form-group">
+            <label>URL</label>
+            <Field
+              name="urlAula"
+              className="form-field"
+              placeholder="Adicione uma url"
+              
+            />
+            <ErrorMessage
+              component="span"
+              name="urlAula"
+              className="form-error"
+            />
+          </div>
 
           <button className="button" type="submit">
             Próximo
@@ -75,4 +104,4 @@ function CadModulo() {
   );
 }
 
-export default CadModulo;
+export default CadCurso;

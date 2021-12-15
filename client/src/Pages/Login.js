@@ -4,6 +4,7 @@ import "./app.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 const Auth = () => {
   const handleLogin = (values) => {
@@ -63,3 +64,8 @@ const Auth = () => {
   );
 };
 export default Auth;
+
+
+{/* <ButtonCadastrar>
+            <Link to="/CadCurso">Cadastrar curso</Link>
+          </ButtonCadastrar> */}

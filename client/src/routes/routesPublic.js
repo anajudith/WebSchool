@@ -8,7 +8,7 @@ import CadastroUsuario from '../Pages/CadUsuario'
 import CadCurso from '../Pages/CadCurso'
 import PageCertificado from '../Pages/PageCertificado';
 import PageModulos from '../Pages/PageModulos';
-
+import PageAula from '../Pages/PageAula';
 
 const Routes = () => (
     <BrowserRouter>
@@ -31,9 +31,13 @@ const Routes = () => (
             <Route  path="/Certificado" >
                 <PageCertificado /> 
             </Route>
-            <Route  path="/Modulo" >
+            <Route  path="/curso/modulo/:id" >
                 <PageModulos /> 
             </Route>
+            <Route  path="/modulo/aula/:id" >
+                <PageAula /> 
+            </Route>
+
             <Route path="/">
                 <InitialScreen />
             </Route>
