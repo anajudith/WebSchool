@@ -4,18 +4,23 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import Axios from "axios";
 import "./CadCurso.css";
+import { useHistory } from "react-router-dom";
 
 function CadCurso() {
+  const history = useHistory();
+
   const cadastrarCurso = (values) => {
     Axios.post("http://localhost:3001/cadastrarCurso", {
       nomeCurso: values.nomeCurso,
       descricaoCurso: values.descricaoCurso,
       tempoDuracao: values.tempoDuracao,
       urlCurso: values.urlCurso,
-    }).then((response) => {
-       alert(response.data.msg);
-       window.open(`/curso/modulo/${response.data.idCurso}`)
-      }).catch((err) => {
+    })
+      .then((response) => {
+        alert(response.data.msg);
+        history.push(`/curso/modulo/${response.data.idCurso}`);
+      })
+      .catch((err) => {
         console.log(err);
       });
   };

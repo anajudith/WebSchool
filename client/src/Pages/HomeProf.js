@@ -1,104 +1,106 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import {
-    UserOutlined,
-    PlayCircleOutlined 
-  } from "@ant-design/icons";
-  import Axios from "axios";
-  
+import { UserOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import Axios from "axios";
+
 class Prof extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {cursos:[]}
+    this.state = { cursos: [] };
   }
-  componentDidMount () {
-    this.getCursos()
+  componentDidMount() {
+    this.getCursos();
   }
-  getCursos () {
-    console.log("teste")
-    Axios.get("http://localhost:3001/curso", 
-    )
-    .then((response) => {
-      this.setState({cursos: response.data})
-    }).catch((err) => {console.log(err)})
-  };
-  
-    render () {
-      let resultCursos = this.state.cursos.map((curso) => (
-        <Cards>
-          <div>
-              <PlayCircleOutlined style={{ fontSize: '8rem', color: 'black', }} />
-          </div>
-          <p>{curso.nomeCurso}</p>
-        </Cards>
-      ));
+  getCursos() {
+    Axios.get("http://localhost:3001/curso")
+      .then((response) => {
+        this.setState({ cursos: response.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-      return (
+  render() {
+    let resultCursos = this.state.cursos.map((curso) => (
+      <Cards>
         <div>
-            <Header>
-        <nav>
-          <Logo>
-            <p>Logo</p>
-          </Logo>
-          <input type="text" placeholder="Buscar cursos?" />
-          
-          <a>Favoritos</a>
-          <Divider />
-          <a><UserOutlined/></a>
-          <Divider />
-          <ButtonCadastrar>
-            <Link to="/CadCurso">Cadastrar curso</Link>
-          </ButtonCadastrar>
-        </nav>
-      </Header>
-      <Container>
-        <span>Gerenciar meus cursos</span>
-      </Container>
-      <Container>
-         {resultCursos}
-      </Container>
+          <PlayCircleOutlined style={{ fontSize: "8rem", color: "black" }} />
         </div>
-    )
-    }
+        <div className="boxInfo">
+          <p>Nome: {curso.nomeCurso}</p>
+          <p>Descrição: {curso.descricaoCurso}</p>
+        </div>
+      </Cards>
+    ));
+
+    return (
+      <div>
+        <Header className="headerHome">
+          <nav>
+            <Logo>
+              <p>Logo</p>
+            </Logo>
+            <input type="text" placeholder="Buscar cursos?" />
+
+            <a>Favoritos</a>
+            <Divider />
+            <a>
+              <UserOutlined />
+            </a>
+            <Divider />
+            <ButtonCadastrar>
+              <Link to="/CadCurso">Cadastrar curso</Link>
+            </ButtonCadastrar>
+          </nav>
+        </Header>
+        <Container>
+          <span>Gerenciar meus cursos</span>
+        </Container>
+        <Container className="boxCursos">{resultCursos}</Container>
+      </div>
+    );
+  }
 }
 
-export default Prof
-
+export default Prof;
 
 const Cards = styled.div`
-    padding-top: 0.5rem; 
-    padding-right: 0;
-    padding-left: 5.5rem;
-    div {
-        
-        height: 15rem;
-        width: 15rem;
-        border: 1px solid;
-        border-color: #FFFF;
-        background-color: #C4C4C4;
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        
-    }
+  padding-top: 0.5rem;
+  padding-right: 0;
+  padding-left: 120px;
+  div:first-child {
+    height: 15rem;
+    width: 15rem;
+    border: 1px solid;
+    border-color: #ffff;
+    background-color: #c4c4c4;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
 
-    p {
-        padding-top: 0.5rem;
-        color: #FFFF;
-        font-size: 1rem;
-    }
-`
+  .boxInfo {
+    width: 250px;
+  }
+
+  p {
+    padding-top: 0.5rem;
+    color: #ffff;
+    font-size: 14px;
+  }
+`;
 
 const Container = styled.div`
-    padding-top: 2rem;
-    display: flex;
-    span {
-        color: #FFFFFF ;
-        font-size: 2.5rem;
-        padding: 2rem 5.5rem;
-    }
-`
+  padding-top: 2rem;
+  display: flex;
+  span {
+    color: #ffffff;
+    font-size: 2.5rem;
+    padding: 2rem 5.5rem;
+  }
+`;
 const Header = styled.header`
   width: 100%;
   height: 80px;
@@ -112,7 +114,7 @@ const Header = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
+    width: 50%;
   }
 
   nav > a {
@@ -120,7 +122,7 @@ const Header = styled.header`
     color: black;
   }
 
- nav > input {
+  nav > input {
     border-radius: 12px;
     width: 300px;
     padding: 6px 12px;

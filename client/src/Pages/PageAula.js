@@ -4,21 +4,26 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import Axios from "axios";
 import "./CadCurso.css";
-import { useParams } from 'react-router';
+import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 
 function CadCurso() {
-    const { id } = useParams();
+  const { id } = useParams();
+  const history = useHistory();
 
   const cadastrarCurso = (values) => {
     Axios.post("http://localhost:3001/cadastrarAula", {
-        nomeAula: values.nomeAula,
-        descricaoAula: values.descricaoAula,
-        tempoDuracao: values.tempoDuracao,
-        urlAula: values.urlAula,
-        idModulo: id
-    }).then((response) => {
-      alert(response.data.msg);
-      }).catch((err) => {
+      nomeAula: values.nomeAula,
+      descricaoAula: values.descricaoAula,
+      tempoDuracao: values.tempoDuracao,
+      urlAula: values.urlAula,
+      idModulo: id,
+    })
+      .then((response) => {
+        alert(response.data.msg);
+        history.push("/professor");
+      })
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -86,7 +91,6 @@ function CadCurso() {
               name="urlAula"
               className="form-field"
               placeholder="Adicione uma url"
-              
             />
             <ErrorMessage
               component="span"

@@ -5,15 +5,23 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Auth = () => {
+  const history = useHistory();
+
   const handleLogin = (values) => {
     Axios.post("http://localhost:3001/login", {
       email: values.email,
       password: values.password,
     }).then((response) => {
       alert(response.data.msg);
-      window.open("/professor");
+      if (
+        response.data.msg != "Conta não encontrada" &&
+        response.data.msg != "Senha incorreta"
+      ) {
+        history.push("/professor");
+      }
     });
   };
 
@@ -37,8 +45,8 @@ const Auth = () => {
       >
         <Form className="login-form">
           <div className="login-form-group">
+            <label>E-mail: </label>
             <Field name="email" className="form-field" placeholder="Email" />
-
             <ErrorMessage
               component="span"
               name="email"
@@ -46,18 +54,19 @@ const Auth = () => {
             />
           </div>
           <div className="form-group">
+            <label>Senha: </label>
             <Field name="password" className="form-field" placeholder="Senha" />
-
             <ErrorMessage
               component="span"
               name="password"
               className="form-error"
             />
           </div>
-
-          <button className="button" type="submit">
-            Login
-          </button>
+          <div className="boxButtonLogin">
+            <button className="button" type="submit">
+              Login
+            </button>
+          </div>
         </Form>
       </Formik>
     </div>
@@ -65,7 +74,8 @@ const Auth = () => {
 };
 export default Auth;
 
-
-{/* <ButtonCadastrar>
+{
+  /* <ButtonCadastrar>
             <Link to="/CadCurso">Cadastrar curso</Link>
-          </ButtonCadastrar> */}
+          </ButtonCadastrar> */
+}

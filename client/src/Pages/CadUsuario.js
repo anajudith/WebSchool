@@ -4,8 +4,11 @@ import "./app.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import Axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function CadastroUsuario() {
+  const history = useHistory();
+
   const handleRegister = (values) => {
     Axios.post("http://localhost:3001/register", {
       nomeCompleto: values.nomeCompleto,
@@ -14,11 +17,18 @@ function CadastroUsuario() {
       telefone: values.telefone,
       cpf: values.cpf,
       dataNascimento: values.dataNascimento,
-      tipoUsuario: values.tipoUsuario,
-    }).then((response) => {
-      alert(response.data.msg);
-      window.open("/login");
-    });
+    })
+      .then((response) => {
+        alert(response.data.msg);
+        if (response.data.msg != "Usuário já cadastrado") {
+          history.push("/login");
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          alert("Erro do sistema");
+        }
+      });
   };
 
   const validationsRegister = yup.object().shape({
@@ -38,7 +48,6 @@ function CadastroUsuario() {
     telefone: yup.string().required("Telefone é obrigatório"),
     cpf: yup.string().required("CPF é obrigatório"),
     dataNascimento: yup.string().required("Data de Nascimento é obrigatório"),
-    tipoUsuario: yup.string().required("Tipo Usuário é obrigatório"),
   });
 
   return (
@@ -51,6 +60,7 @@ function CadastroUsuario() {
       >
         <Form className="register-form">
           <div className="register-form-group">
+            <label>Nome: </label>
             <Field
               name="nomeCompleto"
               className="form-field"
@@ -64,6 +74,7 @@ function CadastroUsuario() {
             />
           </div>
           <div className="register-form-group">
+            <label>E-mail: </label>
             <Field name="email" className="form-field" placeholder="Email" />
 
             <ErrorMessage
@@ -74,6 +85,8 @@ function CadastroUsuario() {
           </div>
 
           <div className="form-group">
+            <label>Senha: </label>
+
             <Field name="password" className="form-field" placeholder="Senha" />
 
             <ErrorMessage
@@ -84,6 +97,7 @@ function CadastroUsuario() {
           </div>
 
           <div className="form-group">
+            <label>Confirme a senha: </label>
             <Field
               name="confirmation"
               className="form-field"
@@ -98,6 +112,7 @@ function CadastroUsuario() {
           </div>
 
           <div className="form-group">
+            <label>Telefone: </label>
             <Field
               name="telefone"
               className="form-field"
@@ -112,12 +127,14 @@ function CadastroUsuario() {
           </div>
 
           <div className="form-group">
+            <label>CPF: </label>
             <Field name="cpf" className="form-field" placeholder="CPF" />
 
             <ErrorMessage component="span" name="cpf" className="form-error" />
           </div>
 
           <div className="form-group">
+            <label>Data de Nascimento: </label>
             <Field name="dataNascimento" className="form-field" type="date" />
 
             <ErrorMessage
@@ -126,21 +143,11 @@ function CadastroUsuario() {
               className="form-error"
             />
           </div>
-
-          <div role="group" aria-labelledby="my-radio-group">
-            <label>
-              <Field type="radio" name="tipoUsuario" value="P" />
-              Quero ser Professor
-            </label>
-            <label>
-              <Field type="radio" name="tipoUsuario" value="A" />
-              Quero ser Aluno
-            </label>
+          <div className="boxButtonLogin">
+            <button className="button" type="submit">
+              Cadastrar
+            </button>
           </div>
-
-          <button className="button" type="submit">
-            Cadastrar
-          </button>
         </Form>
       </Formik>
     </div>
@@ -148,83 +155,3 @@ function CadastroUsuario() {
 }
 
 export default CadastroUsuario;
-
-// <div className="container">
-//   <h1>Login</h1>
-//   <Formik
-//     initialValues={{}}
-//     onSubmit={handleLogin}
-//     validationSchema={validationsLogin}
-//   >
-//     <Form className="login-form">
-//       <div className="login-form-group">
-//         <Field name="email" className="form-field" placeholder="Email" />
-
-//         <ErrorMessage
-//           component="span"
-//           name="email"
-//           className="form-error"
-//         />
-//       </div>
-//       <div className="form-group">
-//         <Field name="password" className="form-field" placeholder="Senha" />
-
-//         <ErrorMessage
-//           component="span"
-//           name="password"
-//           className="form-error"
-//         />
-//       </div>
-
-//       <button className="button" type="submit">
-//         Login
-//       </button>
-//     </Form>
-//   </Formik>
-//   <h1>Cadastro</h1>
-//   <Formik
-//     initialValues={{}}
-//     onSubmit={handleRegister}
-//     validationSchema={validationsRegister}
-//   >
-//     <Form className="register-form">
-//       <div className="register-form-group">
-//         <Field name="email" className="form-field" placeholder="Email" />
-
-//         <ErrorMessage
-//           component="span"
-//           name="email"
-//           className="form-error"
-//         />
-//       </div>
-
-//       <div className="form-group">
-//         <Field name="password" className="form-field" placeholder="Senha" />
-
-//         <ErrorMessage
-//           component="span"
-//           name="password"
-//           className="form-error"
-//         />
-//       </div>
-
-//       <div className="form-group">
-//         <Field
-//           name="confirmation"
-//           className="form-field"
-//           placeholder="Senha"
-//         />
-
-//         <ErrorMessage
-//           component="span"
-//           name="confirmation"
-//           className="form-error"
-//         />
-//       </div>
-
-//       <button className="button" type="submit">
-//         Cadastrar
-//       </button>
-//     </Form>
-//   </Formik>
-// </div>

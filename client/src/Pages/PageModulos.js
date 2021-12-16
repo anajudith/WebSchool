@@ -1,23 +1,25 @@
 import React from "react";
-import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as yup from "yup";
 import Axios from "axios";
 import "./CadCurso.css";
-import { useParams } from 'react-router';
+import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 
 function CadModulo() {
-    const { id } = useParams();
+  const { id } = useParams();
+  const history = useHistory();
 
   const cadastrarModulo = (values) => {
     Axios.post("http://localhost:3001/cadastrarModulo", {
-        tituloModulo: values.tituloModulo,
-        tempoDuracao: values.tempoDuracao,
-        idCurso: id
-    }).then((response) => {
-      alert(response.data.msg);
-      window.open(`/modulo/aula/${response.data.idModulo}`)
-      }).catch((err) => {
+      tituloModulo: values.tituloModulo,
+      tempoDuracao: values.tempoDuracao,
+      idCurso: id,
+    })
+      .then((response) => {
+        alert(response.data.msg);
+        history.push(`/modulo/aula/${response.data.idModulo}`);
+      })
+      .catch((err) => {
         console.log(err);
       });
   };

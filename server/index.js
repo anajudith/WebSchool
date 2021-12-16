@@ -34,15 +34,7 @@ app.post("/register", (req, res) => {
       bcrypt.hash(password, saltRounds, (erro, hash) => {
         db.query(
           "INSERT INTO usuarios (nome, email, senha, Telefone, Data_de_nascimento, CPF, TipoUsuario) VALUES (?, ?, ?, ?, ?, ?, ?)",
-          [
-            nomeCompleto,
-            email,
-            hash,
-            telefone,
-            dataNascimento,
-            cpf,
-            tipoUsuario,
-          ],
+          [nomeCompleto, email, hash, telefone, dataNascimento, cpf, "P"],
           (err, response) => {
             if (err) {
               res.send(err);
@@ -107,9 +99,8 @@ app.post("/cadastrarCurso", (req, res) => {
       if (err) {
         res.send(err);
       }
-      if(response) {
-        res.send({ msg: "Curso inserido com sucesso", idCurso: id
-       });
+      if (response) {
+        res.send({ msg: "Curso inserido com sucesso", idCurso: id });
       } else {
         res.send({ msg: "Não foi possivel inserir o curso" });
       }
@@ -131,9 +122,8 @@ app.post("/cadastrarModulo", (req, res) => {
       if (err) {
         res.send(err);
       }
-      if(response) {
-        res.send({ msg: "Modulo inserido para esse curso", idModulo: id
-       });
+      if (response) {
+        res.send({ msg: "Modulo inserido para esse curso", idModulo: id });
       } else {
         res.send({ msg: "Não foi possivel inserir o modulo" });
       }
@@ -147,7 +137,6 @@ app.post("/cadastrarAula", (req, res) => {
   const tempoDuracao = req.body.tempoDuracao;
   const urlAula = req.body.urlAula;
   const idModulo = req.body.idModulo;
-  
 
   const id = crypto.randomInt(1, 1000);
 
@@ -158,9 +147,8 @@ app.post("/cadastrarAula", (req, res) => {
       if (err) {
         res.send(err);
       }
-      if(response) {
-        res.send({ msg: "Aula inserida"
-       });
+      if (response) {
+        res.send({ msg: "Aula inserida" });
       } else {
         res.send({ msg: "Não foi possivel inserir a aula" });
       }

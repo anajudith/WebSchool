@@ -3,7 +3,7 @@ body {
 }
 
 .container {
-    width: 60%;
+    width: 35%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +13,7 @@ body {
     background-color: #fff;
     padding: 20px 15px;
     margin-top: 150px;
-    border-radius: 7px;
+    border-radius: 28px;
     font-family: Roboto, sans-serif;
 }
 
@@ -35,9 +35,9 @@ h1 {
 
 
 
-.form-field-desc{
-    
-    
+.form-field-desc {
+
+
     height: 15rem;
 }
 
@@ -45,18 +45,19 @@ h1 {
     padding: 10px;
     margin: 4rem;
 }
+
 .form-field {
     display: flex;
-    
     padding: 5px;
     margin-top: 5px;
     transition: all 0.2s ease-in-out;
-    width: 300px;
+    width: 420px;
 }
 
 input {
-    /* background-color: red; */
-    border-radius: 0.2rem;
+    border: 0;
+    background: #BCBCDC;
+    width: 450px;
 }
 
 .form-error {
@@ -69,4 +70,14 @@ input {
 .button {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.boxCursos {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.headerHome {
+    width: 45%;
 }
